@@ -530,6 +530,9 @@ template shimmer {
 		name = shimmer
 		next = pause
 		duration = 2
+		start_sound = {
+			soundeffect = "event:/SFX/UI/Global/shimmer"
+		}
 		
 		bezier = { 0 0.9 1 0.4 }
 
