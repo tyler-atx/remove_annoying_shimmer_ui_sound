@@ -1,27 +1,92 @@
-### Key Findings
+## Work Journal
 _Work journal to help myself or future modders that follow my footsteps with sound editing in this new game_
 
+---
 
-##### Search Game UI/Ambient Sounds and Toast effects
+### Search Game UI/Ambient Sounds and Toast effects
 
 1. Decompress all sound files
 2. Load all sounds in to VLC playlist and manually listen to sounds until the sound is discovered
 
-Bank files are FMOD proprietary format. Here is a [script](https://youtu.be/owvnzePB2iU) to decompress these to waveform.
+The compressed audio collection bank files are FMOD proprietary format. Here is a [script](https://youtu.be/owvnzePB2iU) to decompress these to waveform.
 
-_ui_global_shimmer_01_ is the offending sound, it is found in the `common/sound/banks/Interface` audio collection.
+_ui\_global\_shimmer\_01_ is the offending sound, it is found in the `common/sound/banks/Interface` audio collection.
 
-**Issue**
-Recompressing and replacing the whole compressed audio collection is too surgically invasive for such a small mod and will require a much larger mod size, but would be an alternative way to remove this sound from the game entirely by adding a very short, blank sound.  
+> **Project-level Issue**   
+> The interface bank collection is 14,096kB and the entire collection needs to be replaced to override a small 3-second sound with a mute sound effect.         
+> Recompressing and replacing the whole compressed audio collection is too surgically invasive for such a small mod and will require a much larger mod size.    
 
-#####
+The next step is to search for a way to disable the sound without removing it from the compressed audio bank.
 
+---
 
+### Search for frontend calls to the shimmer effect   
 
-todo 
-- frontend_bookmarks.gui (this has the bookmarks UI element that probably uses the shimmer from animations.gui line 1778). this whole file appears to be commented out
-- animations.gui (this file has some global templates like the global 'shimmer' template that may govern all shimmer effects line 534)
-- try tech_tree.gui
+`gui/shared/animations.gui` contains templates for the `shimmer` style which is used on multiple UI elements including the tech tree buttons.
 
+Below is the code that governs the shimmer template.
 
+```
+File: game\gui\shared\animations.gui
+508: template shimmer {
+509: 	modify_texture = {
+510: 		name = "glow"
+511: 		texture = "gfx/interface/animation/shimmer.dds"
+512: 		blend_mode = colordodge
+513: 		translate_uv = { 0 0 }
+514: 		block "shimmer_visibility" {}
+515: 	}
+516: 
+517: 	state = {
+518: 		trigger_on_create = yes
+519: 		name = show
+520: 		next = shimmer
+521: 		duration = 1
+522: 
+523: 		modify_texture = {
+524: 			name = "glow"
+525: 			translate_uv = { -1 -1 }
+526: 		}
+527: 	}
+528: 
+529: 	state = {
+530: 		name = shimmer
+531: 		next = pause
+532: 		duration = 2
+533: 		start_sound = {
+534: 			soundeffect = "event:/SFX/UI/Global/shimmer"
+535: 		}
+536: 		
+537: 		bezier = { 0 0.9 1 0.4 }
+538: 
+539: 		modify_texture = {
+540: 			name = "glow"
+541: 			translate_uv = { 1 1 }
+542: 		}
+543: 
+544: 		block "shimmer_animation_properties" {}
+545: 	}
+546: 
+547: 	state = {
+548: 		name = pause
+549: 		next = shimmer
+550: 		duration = 0
+551: 		delay = 6
+552: 
+553: 		modify_texture = {
+554: 			name = "glow"
+555: 			translate_uv = { -1 -1 }
+556: 		}
+557: 	}	
+558: }
 
+```
+
+Above, you can see that the button cycles through 3 modes: 
+1. `show` for 1 second only on creation (non-repeating)
+2. `shimmer` for 2 seconds
+3. `pause` for 6 seconds
+
+It loops between 2 and 3 _forever_, driving players crazy.
+
+We will remove the `start_sound` block on `lines 533, 534, 535` but allow the visual shimmer to continue.
