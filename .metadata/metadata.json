@@ -1,0 +1,12 @@
+{
+  "name" : "Remove Annoying Shimmer UI Sound",
+  "id" : "",
+  "version" : "",
+  "supported_game_version" : "",
+  "short_description" : "Removes the endless-looping shimmer UI sound that is noticeable to players who have in-game music off",
+  "tags" : [],
+  "relationships" : [],
+  "game_custom_data" : {
+    "multiplayer_synchronized" : true
+  }
+}
