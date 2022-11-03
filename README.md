@@ -102,6 +102,4 @@ Above, you can see that the button cycles through 3 modes:
 
 It loops between 2 and 3 _forever_, driving players crazy.
 
-We will remove the `start_sound` block on `lines 533, 534, 535` but allow the visual shimmer to continue. 
-
-[Game File Change Commit](https://github.com/tyler-atx/remove_annoying_shimmer_ui_sound/commit/bbc2a53cb75593ebb79ab6a2907a1d96d6a59ed6#diff-24dc24c4046921d7570d91aeb322733a055faa6224874aae1d53d99b6388665bL533)
+We will [remove](https://github.com/tyler-atx/remove_annoying_shimmer_ui_sound/commit/bbc2a53cb75593ebb79ab6a2907a1d96d6a59ed6#diff-24dc24c4046921d7570d91aeb322733a055faa6224874aae1d53d99b6388665bL533) the `start_sound` block on `lines 533, 534, 535` but allow the visual shimmer to continue. 
