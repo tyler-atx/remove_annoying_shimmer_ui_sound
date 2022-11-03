@@ -1,10 +1,10 @@
 {
   "name" : "Remove Annoying Shimmer (Sparkle) UI Sound",
-  "id" : "",
-  "version" : "",
-  "supported_game_version" : "",
-  "short_description" : "Victoria 3 Mod that removes the annoying shimmer UI sound that loops. This is especially noticeable to players who do not use the in-game music. The shimmer sound can appear from multiple UI elements: The bookmarks, the tech tree, and others. Removing one source of the shimmer sound can temporarily relieve the player, but it will often reappear shortly after. This mod will remove the shimmer sound effect from the parent template for many UI elements.",
-  "tags" : [],
+  "id" : "2883711336",
+  "version" : "1.0",
+  "supported_game_version" : "1.0",
+  "short_description" : "Victoria 3 Mod that removes the annoying shimmer UI sound that loops. This is especially noticeable to players who do not use the in-game music. The shimmer sound can appear from multiple UI elements: The bookmarks, the tech tree, and others. Removing one source of the shimmer sound can temporarily relieve the player, but it will often reappear shortly after. This mod will remove the shimmer sound effect from the parent template for many UI elements. \n https://github.com/tyler-atx/remove_annoying_shimmer_ui_sound",
+  "tags" : ["Sound"],
   "relationships" : [],
   "game_custom_data" : {
     "multiplayer_synchronized" : true
